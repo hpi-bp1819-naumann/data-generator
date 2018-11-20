@@ -31,7 +31,7 @@ function_list = {
 	"att2" : {"sql_type" : "BIGINT", "function" : lambda a : str(a*a)}
 	}
 ```
-One column is specified as follows:
+A column is specified as follows:
 ```
 "<name>" : {"sql_type" : "<datatype>", "function" : <function>}
 ```
@@ -42,5 +42,5 @@ One column is specified as follows:
 | datatype	| The sql datatype of the column |
 | function	| The function that gets a row index and calculates a value for the column |
 
-- __The function has to return a string value!__ In case the column shall contain a String, the returned value has to start and end with `'`. 
+- __The function has to return a string value!__ In case the column shall contain a String, the returned value has to start and end with `'` 
 - There are already some functions defined, that you can use. You can find them in the `generator_functions.py`
