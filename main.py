@@ -6,7 +6,7 @@ user = 'dbuser'
 password = 'password'
 db_name = 'testdb_2'
 table_name = 'myTable'
-entries = 1000
+entries = 10000
 
 function_list = {
         "idx" : {"sql_type" : "INTEGER", "function" : lambda a : str(a)},

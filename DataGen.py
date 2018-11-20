@@ -38,10 +38,20 @@ class DataGenerator:
     def add_record_to_database(self, record):
         query_string = """INSERT INTO {0} ({1}) VALUES({2});""".format(self.table_name, ','.join(record), ','.join(record.values()))
         self.cursor.execute(query_string)
+    
+    def print_progress_bar(self, iteration, total, length):
+        percent = ("{0:.2f}").format(100 * (iteration / float(total)))
+        filledLength = int(length * iteration // total)
+        bar = '█' * filledLength + '-' * (length - filledLength)
+        print('\rProgress: |%s| %s%% Complete' % (bar, percent), end = '\r')
+        # Print New Line on Complete
+        if iteration == total: 
+            print()
 
     def generate_data(self, function_list, count):
         self.create_table(function_list)
         for i in range(count):
             record = self.generate_record(function_list, i)
             self.add_record_to_database(record)
+            self.print_progress_bar(i+1, count, 50)
         self.connection.commit()
