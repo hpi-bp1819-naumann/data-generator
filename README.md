@@ -2,12 +2,12 @@
 
 ## Setup
 
-1. Install psycopg2 to access the database
+1. If you want to write the data into a database Install psycopg2 via
 ```pip3 install psycopg2-binary```  
 
 2. Clone the repository
 
-## How To Use
+## How To Use Data Export To Database
 
 - Open `main.py` in your prefered text editor
 - Adjust the Settings for the Database
@@ -19,6 +19,19 @@
 | password 	| string | password for the user |
 | db\_name 	| string | name of the database |
 | table\_name	| string | name of the table data data shall be added to |
+| entries	| string | number of entries that shall be created |
+
+- Set up `function_list` (see section Function List)
+
+
+## How To Use Data Export To CSV File
+
+- Open `mainCSV.py` in your prefered text editor
+- Adjust the Settings for the CSV file creation
+
+| variable	| datatype | description |
+| ------------- | -------- | ----------- |
+| file_name 	| string | filename the csv data will be writen to |
 | entries	| string | number of entries that shall be created |
 
 - Set up `function_list` (see section Function List)
