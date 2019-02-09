@@ -9,9 +9,9 @@ table_name = 'myTable'
 entries = 10000
 
 function_list = {
-        "idx" : {"sql_type" : "INTEGER", "function" : lambda a : str(a)},
-        "square" : {"sql_type" : "BIGINT", "function" : lambda a : str(a*a)},
-        "random_string" : {"sql_type" : "TEXT", "function" : generator_functions.random_string}
+        "idx": {"sql_type": "INTEGER", "function": lambda a: str(a)},
+        "square": {"sql_type": "BIGINT", "function": lambda a: str(a*a)},
+        "random_string": {"sql_type": "TEXT", "function": generator_functions.random_string}
         }
 
 with DataGen.DataGenerator(host=host, user=user, password=password, db_name=db_name, table_name=table_name) as gen:
