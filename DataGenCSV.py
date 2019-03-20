@@ -1,4 +1,6 @@
 import csv
+import random
+
 
 class DataGenerator:
     # generates random data according to given functions and saves them to database
@@ -15,18 +17,18 @@ class DataGenerator:
     # generates datarecord
     def generate_record(self, function_list, counter):
         record = {}
-        for function in function_list:
-            record[function] = function_list[function]["function"](counter)
-        
+        for f in function_list:
+            record[f] = function_list[f]["function"](counter, record)
+
         return record
-    
+
     def print_progress_bar(self, iteration, total, length):
         percent = ("{0:.2f}").format(100 * (iteration / float(total)))
         filledLength = int(length * iteration // total)
         bar = '█' * filledLength + '-' * (length - filledLength)
-        print('\rProgress: |%s| %s%% Complete' % (bar, percent), end = '\r')
+        print('\rProgress: |%s| %s%% Complete' % (bar, percent), end='\r')
         # Print New Line on Complete
-        if iteration == total: 
+        if iteration == total:
             print()
 
     def generate_data(self, function_list, count):
@@ -37,5 +39,6 @@ class DataGenerator:
 
             for i in range(count):
                 record = self.generate_record(function_list, i)
+
                 writer.writerow(record)
-                self.print_progress_bar(i+1, count, 50)
+                self.print_progress_bar(i + 1, count, 50)

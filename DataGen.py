@@ -1,14 +1,17 @@
+import random
+
 import psycopg2
+
 
 class DataGenerator:
     # generates random data according to given functions and saves them to database
 
     def __init__(self, host, user, password, db_name, table_name):
         self.connection = psycopg2.connect(
-                host=host,
-                user=user,
-                password=password,
-                dbname=db_name
+            host=host,
+            user=user,
+            password=password,
+            dbname=db_name
         )
         self.cursor = self.connection.cursor()
         self.table_name = table_name
@@ -22,9 +25,9 @@ class DataGenerator:
     # generates datarecord
     def generate_record(self, function_list, counter):
         record = {}
-        for function in function_list:
-            record[function] = function_list[function]["function"](counter)
-        
+        for f in function_list:
+            record[f] = function_list[f]["function"](counter, record)
+
         return record
 
     def create_table(self, function_list):
@@ -36,22 +39,27 @@ class DataGenerator:
         self.connection.commit()
 
     def add_record_to_database(self, record):
-        query_string = """INSERT INTO {0} ({1}) VALUES({2});""".format(self.table_name, ','.join(record), ','.join(record.values()))
+        query_string = """INSERT INTO {0} ({1}) VALUES({2});""".format(self.table_name, ','.join(record),
+                                                                       ','.join(record.values()))
         self.cursor.execute(query_string)
-    
+
     def print_progress_bar(self, iteration, total, length):
         percent = ("{0:.2f}").format(100 * (iteration / float(total)))
         filledLength = int(length * iteration // total)
         bar = '█' * filledLength + '-' * (length - filledLength)
-        print('\rProgress: |%s| %s%% Complete' % (bar, percent), end = '\r')
+        print('\rProgress: |%s| %s%% Complete' % (bar, percent), end='\r')
         # Print New Line on Complete
-        if iteration == total: 
+        if iteration == total:
             print()
 
     def generate_data(self, function_list, count):
         self.create_table(function_list)
         for i in range(count):
             record = self.generate_record(function_list, i)
+            if record["att9"] == "False":
+                if random.random() < 0.4:
+                    while record["att9"] == "False":
+                        record = self.generate_record(function_list, i)
             self.add_record_to_database(record)
-            self.print_progress_bar(i+1, count, 50)
+            self.print_progress_bar(i + 1, count, 50)
         self.connection.commit()
